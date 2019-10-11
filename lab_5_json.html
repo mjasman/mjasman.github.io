@@ -11,8 +11,7 @@
     <div class="wrapper">
       <div class="header">Test JSON page</div>
       <!-- <button class="button" onclick="loadData()">Load Some JSON</button> -->
-      <button class="button" onclick="
-      console.log('List of Random 50 countries in the world', random_place);">Click me to replace list entries</button>
+      <button class="button" onclick="console.log('List of Random 50 countries in the world',clickMe());">Click me to replace list entries</button>
       <div class="content">
         <ul class="instructions">
           <li>Delete and re-clone the class repository</li>
@@ -30,6 +29,7 @@
         </ul>
       </div>
       <div class="footer"></div>
+ 
     </div>
   </div>
   <script>
@@ -279,35 +279,43 @@
       { "name": "Zambia", "code": "ZM" },
       { "name": "Zimbabwe", "code": "ZW" }
     ]
-      let count_list = [];
-      let code_list = [];
-      for (i = 0; i < countries.length; i++){
-        count_list.push(countries[i].name);
-        code_list.push(countries[i].code);
-      }
 
-      random_place = [];
-      random_code = [];
-      for (i = 0;i <countries.length;i++){
-        while(random_place.length < 50){
-          var j = Math.floor(Math.random()*244);
-          var check = random_place.includes(count_list[j]);
-          if (check == false){
-            random_place.push(count_list[j]);
-            random_code.push(code_list[j]);
-          } else {
-            random_place = random_place;
-            random_code = random_code;
+      //console.log("List of countries in the world", countries);
+      sessionStorage.setItem('countries_arr',JSON.stringify(countries));
+      function rng(){
+        return Math.floor(Math.random()*(countries.length-1));
+      }
+      function clickMe(){
+        const json = sessionStorage.getItem('countries_arr');
+        const list = JSON.parse(json);
+        const element = document.querySelector('.instructions')
+        const names = [];
+
+        for(i=0; i<list.length;i+= 1) {
+          names[i] = list[i].name;
+        }
+
+        const rand_names = [];
+
+        for (i = 0;i <names.length;i+=1){
+          
+          while(rand_names.length < 50){
+            let j = rng();
+            if (rand_names.includes(names[j]) == false){
+              rand_names.push(names[j]);
+              //rand_names.map((i)=> {return element.innerHTML = "<li>" + i + "</li>"});       
+            } else {
+              continue;
+            }
           }
         }
-        
-      }
-      sessionStorage.setItem( random_code,random_place);
-      let final_list = sessionStorage.getItem(random_code) 
-      //console.log("List of countries in the world", count_list);
-      //console.log("List of Random 50 countries in the world", random_place);
+          const displays = rand_names.map(i =>("<li>" + i + "</li>"));
 
+          element.innerHTML = "<ol>"+ displays +"</ol>";
+        
+        return rand_names;
       
+      }       
     </script>
 </body>
 
