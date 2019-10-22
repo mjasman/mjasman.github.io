@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Test AJAX page</title>
+  <link rel="stylesheet" type="text/css" href="./lab_styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <div class="header">Test AJAX page</div>
+      <button class="button" onclick="loadData()">Load Some JSON</button>
+      <div class="content"></div>
+      <div class="footer"></div>
+    </div>
+  </div>
+  <script>
+    function loadData() {
+      fetch('ajax_sample.json')
+        .then(res => res.json())
+        .then(res => random_names(res))
+        .then(names => document.querySelector(".content").innerText = names);
+    }
+    function rng(x){
+        return Math.floor(Math.random()*(x-1));
+      }
+    function random_names(names){
+      for (i = 0;i <names.length;i+=1){
+          var rand_names = [];
+          while(rand_names.length < 15){
+            let j = rng(243);
+            if (rand_names.includes(names[j].name) == false){
+              rand_names.push(names[j].name);
+            } else {
+              continue;
+            }
+          }
+        }
+      console.log(rand_names);
+      return rand_names;
+    }
+  </script>
+</body>
+
+</html>
