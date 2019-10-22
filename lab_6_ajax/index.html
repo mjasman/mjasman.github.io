@@ -20,7 +20,7 @@
       fetch('ajax_sample.json')
         .then(res => res.json())
         .then(res => random_names(res))
-        .then(names => document.querySelector(".content").innerText = names);
+        .then(names => document.querySelector(".content").innerText = "<ol>"+names+"</ol>");
     }
     function rng(x){
         return Math.floor(Math.random()*(x-1));
@@ -37,6 +37,7 @@
             }
           }
         }
+      rand_names.map(i =>("<li>" + i + "</li>"));
       console.log(rand_names);
       return rand_names;
     }
