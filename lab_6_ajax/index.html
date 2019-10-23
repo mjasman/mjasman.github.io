@@ -20,7 +20,7 @@
       fetch('ajax_sample.json')
         .then(res => res.json())
         .then(res => random_names(res))
-        .then(names => document.querySelector(".content").innerText = "<ol>"+names+"</ol>");
+        .then(names => document.querySelector(".content").innerHTML = names);
     }
     function rng(x){
         return Math.floor(Math.random()*(x-1));
@@ -31,15 +31,13 @@
           while(rand_names.length < 15){
             let j = rng(243);
             if (rand_names.includes(names[j].name) == false){
-              rand_names.push(names[j].name);
+              rand_names.push("<li>" + names[j].name +": "+ names[j].code+ "</li>");
             } else {
               continue;
             }
           }
         }
-      rand_names.map(i =>("<li>" + i + "</li>"));
-      console.log(rand_names);
-      return rand_names;
+      return rand_names = "<ol>" + rand_names + "</ol>";
     }
   </script>
 </body>
